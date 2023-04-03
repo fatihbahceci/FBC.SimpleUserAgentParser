@@ -57,6 +57,38 @@ namespace FBC.SimpleUserAgentParser
                                 this.PlatformString = pChromeOs;
                                 this.PlatformVersion = pChromeOs.Split(" ").Skip(1).LastOrDefault();
                             }
+                            //Mozilla/5.0 (X11; Linux i686; rv:47.0) Gecko/20100101 Firefox/47.0
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/534.24 XiaoMi/MiuiBrowser/13.22.1-gn
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 OPR/92.0.0.0
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.61
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 OPR/96.0.0.0
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36 Google-PageRenderer Google (+https://developers.google.com/+/web/snippet/)
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/19.0 Chrome/102.0.5005.125 Safari/537.36
+                            //Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/20.0 Chrome/106.0.5249.126 Safari/537.36
+                            //Mozilla/5.0 (X11; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0
+                            //Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0
+                            //Mozilla/5.0 (X11; Linux x86_64; rv:96.0) Gecko/20100101 Firefox/96.0
+                            //Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.6) Gecko/2009020518 Ubuntu/9.04 (jaunty) Firefox/52.0.1
+                            //Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9b3pre) Gecko/2008020507 Firefox/51.0
+                            //Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.8) Gecko/20100723 Ubuntu/10.04 (lucid) Firefox/3.6.8
+                            //Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/110.0
+                            //Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
+                            else if (userAgentData.SystemInformation.Contains("Ubuntu") || userAgentData.Platforms.Any(x=> x.Product == EProductChildItem.Ubuntu))
+                            {
+                                this.Platform = EPlatform.Linux;
+                                this.PlatformString = "Ubuntu";
+                            }
+                            else if (userAgentData.SystemInformation.AnyStartsWith("Linux") is string pLinux)
+                            {
+                                this.Platform = EPlatform.ChromeOS;
+                                this.PlatformString = pLinux;
+                                this.PlatformVersion = pLinux.Split(" ").Skip(1).LastOrDefault();
+                            }
                             else
                             {
                                 this.Platform = EPlatform.Linux;
@@ -71,7 +103,7 @@ namespace FBC.SimpleUserAgentParser
                             {
                                 this.PlatformString = macOSString;
                                 this.PlatformVersion = macOSString.Split(" ").Skip(1).LastOrDefault();
-                            } 
+                            }
                             break;
 
                         case "iPhone":
@@ -133,14 +165,15 @@ namespace FBC.SimpleUserAgentParser
                 switch (userAgentData.SystemName)
                 {
                     case ESystem.Unknown:
-                        break;
                     case ESystem.Mozilla:
                         break;
                     case ESystem.Twitterbot:
                     case ESystem.WhatsApp:
                     case ESystem.LivelapBot:
-                    case ESystem.GooglebotImage:
+                    case ESystem.GoogleBot:
                     case ESystem.ApacheHttpClient:
+                    case ESystem.TelegramBot:
+                    case ESystem.OtherBot:
                         //parsePlatformString(EPlatform.Android, pAndroid);
 
                         this.Platform = EPlatform.BotCrawler;
@@ -185,6 +218,7 @@ namespace FBC.SimpleUserAgentParser
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.DuckDuckGo, EBrowser.DuckDuckGo),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.SamsungBrowser, EBrowser.SamsungBrowser),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.HuaweiBrowser, EBrowser.HuaweiBrowser),
+            new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.Edg, EBrowser.Edge),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.EdgA, EBrowser.EdgeForAndroid),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.EdgW, EBrowser.EdgeWebView),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.Puffin, EBrowser.Puffin),
@@ -286,9 +320,10 @@ namespace FBC.SimpleUserAgentParser
                     if (this.Platform == EPlatform.BotCrawler)
                     {
                         this.Browser = EBrowser.BotCrawler;
-                    } else
+                    }
+                    else
                     {
-                        if (userAgentData.Platforms.Any(x=> x.Product == EProductChildItem.Preview))
+                        if (userAgentData.Platforms.Any(x => x.Product == EProductChildItem.Preview))
                         {
                             if (userAgentData.CommentData.Contains("SkypeUriPreview"))
                             {

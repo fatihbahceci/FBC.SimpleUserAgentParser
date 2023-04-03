@@ -66,7 +66,9 @@
         WhatsApp,
         LivelapBot,
         ApacheHttpClient,
-        GooglebotImage,
+        GoogleBot,
+        TelegramBot,
+        OtherBot
     }
 
     public enum EBrowser

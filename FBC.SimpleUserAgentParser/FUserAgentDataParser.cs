@@ -92,8 +92,9 @@ namespace FBC.SimpleUserAgentParser
                             //Apache-HttpClient/UNAVAILABLE (java 1.4)
                             case "Apache-HttpClient": SystemName = ESystem.ApacheHttpClient; break;
                             //Googlebot-Image/1.0
-                            case "Googlebot-Image": SystemName = ESystem.GooglebotImage; break;
+                            case "Googlebot-Image": SystemName = ESystem.GoogleBot; break;
                             default:
+                                //if (systemNameString.StartsWith)
                                 break;
                         }
                         mainAssigned = true;
@@ -129,19 +130,30 @@ namespace FBC.SimpleUserAgentParser
                     }
                     else
                     {
-                        //switch(userAgent)
-                        //{
-                        //    case "Google":
-                        //    SystemName = ESystem.bo
-                        //    default: 
-                        //        break;
-                        //}
-                        clearData(true);
-                        SystemName = ESystem.Unknown;
-                        SystemNameString = "Invalid";
-                        SystemVersion = "";
-                        CommentData = userAgent;
-
+                        switch (userAgent)
+                        {
+                            case "TelegramBot (like TwitterBot)":
+                                SystemName = ESystem.TelegramBot;
+                                systemNameString = userAgent;
+                                break;
+                            case "Google":
+                            case "Google-Safety":
+                                SystemName = ESystem.GoogleBot;
+                                systemNameString = userAgent;
+                                break;
+                            case "Mozilla":
+                            case "help@dataminr.com":
+                                SystemName = ESystem.OtherBot;
+                                systemNameString = userAgent;
+                                break;
+                            default:
+                                clearData(true);
+                                SystemName = ESystem.Unknown;
+                                SystemNameString = "Invalid";
+                                SystemVersion = "";
+                                CommentData = userAgent;
+                                break;
+                        }
                     }
                 }
             }
