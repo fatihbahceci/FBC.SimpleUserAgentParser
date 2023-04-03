@@ -2,7 +2,7 @@
 
 namespace FBC.SimpleUserAgentParser {
     public struct FAgentPlatform {
-        public EFBCUAProductChildItem Product { get; set; }
+        public EProductChildItem Product { get; set; }
         public string ProductAsStr { get; set; }
         public string ProductVersion { get; set; }
 

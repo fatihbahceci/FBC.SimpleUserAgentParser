@@ -1,6 +1,7 @@
-﻿namespace FBC.SimpleUserAgentParser {
+﻿namespace FBC.SimpleUserAgentParser
+{
 
-    public enum EUAPlatform
+    public enum EPlatform
     {
         Unknown,
         BotCrawler,
@@ -11,10 +12,13 @@
         Macintosh,
         iPhone,
         iPad,
-        OtherMobile
+        OtherMobile,
+        Apple,
+        ChromeOS
     }
 
-    public enum EFBCUAProductChildItem {
+    public enum EProductChildItem
+    {
         Unknown,
         AppleWebKit,
         Chrome,
@@ -34,9 +38,26 @@
         facebookexternalhit,
         XiaoMi,
         Twitterbot,
-        KAIOS
+        KAIOS,
+        DuckDuckGo,
+        HuaweiBrowser,
+        EdgA,
+        Puffin,
+        FxiOS,
+        OPT,
+        EdgW,
+        /// <summary>
+        /// it's probably pdf viewer
+        /// </summary>
+        Viewer,
+        /// <summary>
+        /// Mozilla/5.0 (Windows NT 6.1; WOW64) SkypeUriPreview Preview/0.5 skype-url-preview@microsoft.com
+        /// </summary>
+        Preview,
+        XiaoMiMiuiBrowser,
+        YaBrowser,
+        SA,
     }
-
     public enum ESystem
     {
         Unknown,
@@ -46,6 +67,33 @@
         LivelapBot,
         ApacheHttpClient,
         GooglebotImage,
+    }
+
+    public enum EBrowser
+    {
+        Unknown,
+        BotCrawler,
+        Chrome,
+        Edge,
+        Firefox,
+        InternetExplorer,
+        Opera,
+        Safari,
+        AppleWebKit,
+        DuckDuckGo,
+        SamsungBrowser,
+        HuaweiBrowser,
+        EdgeForAndroid,
+        Puffin,
+        /// <summary>
+        /// IE For Apple
+        /// </summary>
+        Trident,
+        FirefoxForiOS,
+        OperaTouch,
+        EdgeWebView,
+        XiaoMiMiuiBrowser,
+        YandexBrowser,
     }
 
 }
