@@ -18,6 +18,7 @@ namespace FBC.SimpleUserAgentParser
             "BLEXBot",
             "Discordbot",
             "DotBot",
+            "AhrefsBot"
         };
     }
 }

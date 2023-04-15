@@ -56,6 +56,7 @@
         Preview,
         XiaoMiMiuiBrowser,
         YaBrowser,
+        HiBrowser,
         SA,
     }
     public enum ESystem
@@ -65,6 +66,7 @@
         Twitterbot,
         WhatsApp,
         LivelapBot,
+        //Java based HTTP client
         ApacheHttpClient,
         GoogleBot,
         TelegramBot,
@@ -96,6 +98,7 @@
         EdgeWebView,
         XiaoMiMiuiBrowser,
         YandexBrowser,
+        HiBrowser,
     }
 
 }

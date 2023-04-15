@@ -213,6 +213,7 @@ namespace FBC.SimpleUserAgentParser
 
         private KeyValuePair<EProductChildItem, EBrowser>[] browsersByPriority = new KeyValuePair<EProductChildItem, EBrowser>[]
         {
+            new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.HiBrowser, EBrowser.HiBrowser),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.XiaoMiMiuiBrowser, EBrowser.XiaoMiMiuiBrowser),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.YaBrowser, EBrowser.YandexBrowser),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.DuckDuckGo, EBrowser.DuckDuckGo),
@@ -320,6 +321,7 @@ namespace FBC.SimpleUserAgentParser
                     if (this.Platform == EPlatform.BotCrawler)
                     {
                         this.Browser = EBrowser.BotCrawler;
+                        this.BrowserVersion = this.PlatformVersion;
                     }
                     else
                     {
