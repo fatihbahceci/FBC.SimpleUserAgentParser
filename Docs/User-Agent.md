@@ -539,6 +539,79 @@ Additional tokens can be added to the user-agent string by using the Registry Ed
 
 **Note** If the browser is open when these keys are changed, the changes don't take effect until all browser windows are closed; this includes applications hosting the [WebBrowser Control](https://msdn.microsoft.com/en-us/library/Aa752040). Be aware that applications hosting the WebBrowser Control can override the Internet Explorer user-agent string without modifying it. For more info, see [PRB: WebBrowser Control Clients Share Global Settings](https://go.microsoft.com/fwlink/p/?linkid=203618).
 
+
+
+# Overview of Bing crawlers (user agents)
+
+Source: https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0
+
+Bing operates five main crawlers today:
+
+## Bingbot
+
+Bingbot is our standard crawler and handles most of our crawling needs each day. Bingbot uses different types of user agent strings.
+
+```
+Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm) Chrome/
+
+Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+W.X.Y.Z Safari/537.36
+
+Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/W.X.Y.Z Mobile Safari/537.36  (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+ 
+```
+
+We regularly update our web page rendering engine to the most recent stable version of Microsoft Edge. Thus, "W.X.Y.Z" will be substituted with the latest Microsoft Edge version we are using, for example “80.0.345.0".
+
+## AdIdxBot
+
+AdIdxBot is the crawler used by Bing Ads. AdIdxBot crawls ads and follows the websites from those ads for quality control. Just like Bingbot, AdIdxBot has both “desktop” and “mobile” variants.
+
+```
+Mozilla/5.0 (compatible; adidxbot/2.0; +http://www.bing.com/bingbot.htm)
+
+Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53 (compatible; adidxbot/2.0; +http://www.bing.com/bingbot.htm)
+
+Mozilla/5.0 (Windows Phone 8.1; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Lumia 530) like Gecko (compatible; adidxbot/2.0; +http://www.bing.com/bingbot.htm)
+```
+
+## BingPreview
+
+BingPreview generates page snapshots for Bing. You can find more details about BingPreview [here](http://blogs.bing.com/webmaster/2012/10/26/page-snapshots-in-bing-windows-8-app-to-bring-new-crawl-traffic-to-sites/). Note that BingPreview has "desktop" and "mobile" variants.
+
+```
+Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm) Chrome/W.X.Y.Z Safari/537.36
+
+Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/W.X.Y.Z Mobile Safari/537.36  (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+```
+
+## MicrosoftPreview
+
+MicrosoftPreview generates page snapshots for Microsoft products. Note that MicrosoftPreview has "desktop" and "mobile" variants.
+
+```
+Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; MicrosoftPreview/2.0; +https://aka.ms/MicrosoftPreview) Chrome/W.X.Y.Z Safari/537.36
+
+Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/W.X.Y.Z Mobile Safari/537.36  (compatible; MicrosoftPreview/2.0; +https://aka.ms/MicrosoftPreview)
+```
+
+## Verifying authenticity
+
+You can identify Bing crawlers with the user agent string. But user agent strings are easy to spoof, so not every request with these user agent strings may be coming from a real Bing crawler. To determine if a request is from a Bing crawler, look for the user agent string, but keep in mind that user agent strings can be faked. To ensure the IP is authentic, use the [Verify Bingbot tool](https://www.bing.com/webmasters/verifybingbot) or [learn about all verification methods we offer.](https://www.bing.com/webmasters/help/how-to-verify-bingbot-3905dc26)
+
+## Controlling crawl and crawl rates
+
+To control how our crawlers interact with your website, you have two options:
+
+- [Robots.txt files](https://www.bing.com/webmaster/help/?topicid=cb7c31ec) can be configured to tell Bing crawlers how to interact with your website.
+- Bing Webmaster Tools allow you to control crawl rates by the hour using the [Crawl control](https://www.bing.com/webmaster/help/?topicid=55a30303) tool.
+
+## Reporting problems
+
+If you notice crawl issues with Bingbot or any of our other crawlers, follow the steps outlined in [How to report an issue with Bingbot](https://www.bing.com/webmasters/help/how-to-report-an-issue-with-bingbot-25c19802).
+
+
+
 #  Useful Links
 
 [Browser detection using the user agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent)

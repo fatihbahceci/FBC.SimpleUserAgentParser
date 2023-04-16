@@ -78,7 +78,7 @@ namespace FBC.SimpleUserAgentParser
                             //Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.8) Gecko/20100723 Ubuntu/10.04 (lucid) Firefox/3.6.8
                             //Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/110.0
                             //Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
-                            else if (userAgentData.SystemInformation.Contains("Ubuntu") || userAgentData.Platforms.Any(x=> x.Product == EProductChildItem.Ubuntu))
+                            else if (userAgentData.SystemInformation.Contains("Ubuntu") || userAgentData.Platforms.Any(x => x.Product == EProductChildItem.Ubuntu))
                             {
                                 this.Platform = EPlatform.Linux;
                                 this.PlatformString = "Ubuntu";
@@ -173,6 +173,7 @@ namespace FBC.SimpleUserAgentParser
                     case ESystem.GoogleBot:
                     case ESystem.ApacheHttpClient:
                     case ESystem.TelegramBot:
+                    case ESystem.WordPress:
                     case ESystem.OtherBot:
                         //parsePlatformString(EPlatform.Android, pAndroid);
 
@@ -183,30 +184,23 @@ namespace FBC.SimpleUserAgentParser
                 }
             }
 
-            //if (this.Platform == EPlatform.Unknown)
-            //{
-            //    if (this.PlatformVersion.StartsWithOneOfThese(C.BotCrawlerPrefixes))
-            //    {
-            //        this.Platform = EPlatform.BotCrawler;
-            //    }
-            //    else if (this.PlatformString == "compatible")
-            //    {
-            //        var exists = details.Where(x => x.StartsWith("Windows")).FirstOrDefault();
-            //        if (!string.IsNullOrEmpty(exists))
-            //        {
-            //            this.Platform = EPlatform.Windows;
-            //            this.PlatformString = exists;
-            //            if (this.PlatformString.Contains(' '))
-            //            {
-            //                this.PlatformVersion = this.PlatformString.Split(' ', 2, StringSplitOptions.TrimEntries)[1];
-            //            }
-            //            else
-            //            {
-            //                this.PlatformVersion = "";
-            //            }
-            //        }
-            //    }
-            //}
+            if (this.Platform == EPlatform.Unknown)
+            {
+
+
+                var bindBotPlatform = userAgentData.Platforms?.Where(x =>
+                x.Details.Contains("compatible") &&
+
+                (x.Details.AnyStartsWithOneOfThese(C.BingBotPrefixes) is string str && !string.IsNullOrEmpty(str))
+
+                ).FirstOrDefault();
+                if (bindBotPlatform is FAgentPlatform platform)
+                {
+                    var bindBotStr = platform.Details.AnyStartsWithOneOfThese(C.BingBotPrefixes);
+                    parsePlatformString(EPlatform.BotCrawler, bindBotStr!);
+                }
+
+            }
         }
 
         //Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/110.0.5481.153 Mobile DuckDuckGo/5 Safari/537.36

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -93,6 +94,7 @@ namespace FBC.SimpleUserAgentParser
                             case "Apache-HttpClient": SystemName = ESystem.ApacheHttpClient; break;
                             //Googlebot-Image/1.0
                             case "Googlebot-Image": SystemName = ESystem.GoogleBot; break;
+                            case "WordPress": SystemName = ESystem.WordPress; break;
                             default:
                                 //if (systemNameString.StartsWith)
                                 break;
@@ -106,10 +108,19 @@ namespace FBC.SimpleUserAgentParser
                         sub.ProductAsStr = product;
                         sub.ProductVersion = version;
                         sub.Details = (details ?? "").Split(new char[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
-                        EProductChildItem tryParse;
-                        if (Enum.TryParse<EProductChildItem>(sub.ProductAsStr, out tryParse))
+                       //is valid http(s)://.... url
+                        if (Regex.IsMatch(m.Value, @"^(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$", RegexOptions.IgnoreCase))
                         {
-                            sub.Product = tryParse;
+                            sub.Product = EProductChildItem.URL;
+                            sub.ProductAsStr = m.Value;
+                            sub.ProductVersion = "";
+                        } else
+                        {
+                            EProductChildItem tryParse;
+                            if (Enum.TryParse<EProductChildItem>(sub.ProductAsStr, out tryParse))
+                            {
+                                sub.Product = tryParse;
+                            }
                         }
                         if (sub.Product == EProductChildItem.Unknown)
                         {

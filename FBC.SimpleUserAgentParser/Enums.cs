@@ -57,6 +57,7 @@
         XiaoMiMiuiBrowser,
         YaBrowser,
         HiBrowser,
+        URL,
         SA,
     }
     public enum ESystem
@@ -70,6 +71,7 @@
         ApacheHttpClient,
         GoogleBot,
         TelegramBot,
+        WordPress,
         OtherBot
     }
 
