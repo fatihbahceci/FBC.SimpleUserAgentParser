@@ -117,7 +117,7 @@ namespace FBC.SimpleUserAgentParser
                         } else
                         {
                             EProductChildItem tryParse;
-                            if (Enum.TryParse<EProductChildItem>(sub.ProductAsStr, out tryParse))
+                            if (sub.ProductAsStr.TryEnumParseFromDescriptionOrEnum<EProductChildItem>(out tryParse))
                             {
                                 sub.Product = tryParse;
                             }

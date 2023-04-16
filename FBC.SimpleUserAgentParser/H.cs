@@ -129,5 +129,33 @@ namespace FBC.SimpleUserAgentParser
                 ? default
                 : JsonSerializer.Deserialize<T>(json, JsonDeserializationOptions);
         }
+        /// <summary>
+        /// <see cref="DescriptionAttribute"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool TryEnumParseFromDescriptionOrEnum<T>(this string? input, out T result) where T : struct, Enum
+        {
+            if (string.IsNullOrEmpty(input)) {
+                result = default;
+                return false; }
+            foreach (T value in Enum.GetValues(typeof(T)))
+            {
+                var fieldInfo = typeof(T).GetField(value.ToString());
+                var attribute = fieldInfo?.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                                                         .FirstOrDefault() as DescriptionAttribute;
+
+                if (attribute != null && attribute.Description.Equals(input, StringComparison.OrdinalIgnoreCase))
+                {
+                    result = value;
+                    return true;
+                }
+            }
+
+            // Eğer Description attribute'ü yoksa standart Enum.TryParse kullanılır.
+            return Enum.TryParse(input, true, out result);
+        }
     }
 }
