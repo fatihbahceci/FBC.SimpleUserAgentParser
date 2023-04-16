@@ -34,8 +34,8 @@ namespace FBC.SimpleUserAgentParser
                         MatchedFullValue = m.Value
                     };
                 }
-                //(string)/(string)(any)
-                else if (Regex.Match(agentString, @"^([^\(\)\s]+)\/([^\(\)\s]+)\s?(.*)$") is Match m2 && m2.Success)
+                //(string)/([can starts with a space]string)(any)
+                else if (Regex.Match(agentString, @"^([^\(\)\s]+)\/(\s?[^\(\)\s]+)\s?(.*)$") is Match m2 && m2.Success)
                 {
                     return new UserAgentStringMatch()
                     {

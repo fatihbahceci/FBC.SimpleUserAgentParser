@@ -63,7 +63,10 @@ namespace FBC.SimpleUserAgentParser
         SA,
         //Double agent problem. Example: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Safari/602.1.50
         [Description("Mozilla")]
-        MozillaDuplicated
+        MozillaDuplicated,
+        //Universal Web View Service for Mobile
+        UWS
+
     }
     public enum ESystem
     {
@@ -106,6 +109,7 @@ namespace FBC.SimpleUserAgentParser
         XiaoMiMiuiBrowser,
         YandexBrowser,
         HiBrowser,
+        UniversalWebViewServiceForMobile,
     }
 
 }

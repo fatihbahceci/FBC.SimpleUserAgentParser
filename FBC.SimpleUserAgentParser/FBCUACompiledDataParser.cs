@@ -213,6 +213,7 @@ namespace FBC.SimpleUserAgentParser
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.DuckDuckGo, EBrowser.DuckDuckGo),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.SamsungBrowser, EBrowser.SamsungBrowser),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.HuaweiBrowser, EBrowser.HuaweiBrowser),
+            new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.UWS, EBrowser.UniversalWebViewServiceForMobile),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.Edg, EBrowser.Edge),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.EdgA, EBrowser.EdgeForAndroid),
             new KeyValuePair<EProductChildItem, EBrowser>(EProductChildItem.EdgW, EBrowser.EdgeWebView),
