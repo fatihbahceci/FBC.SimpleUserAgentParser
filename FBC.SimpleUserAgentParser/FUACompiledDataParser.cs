@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FBC.SimpleUserAgentParser
 {
-    public partial class FBCUACompiledData
+    public partial class FUACompiledData
     {
         private void CompileData(FUserAgentData userAgentData)
         {
@@ -23,11 +23,11 @@ namespace FBC.SimpleUserAgentParser
             {
                 this.Platform = platform;
                 this.PlatformString = platformString;
-                if (platformString.Contains(' '))
+                if (platformString?.Contains(' ') == true)
                 {
                     this.PlatformVersion = platformString.Split(' ', 2).Skip(1).FirstOrDefault();
                 }
-                else if (platformString.Contains('/'))
+                else if (platformString?.Contains('/') == true)
                 {
                     this.PlatformVersion = platformString.Split('/', 2).Skip(1).FirstOrDefault();
                 }

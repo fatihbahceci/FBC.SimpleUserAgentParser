@@ -15,7 +15,7 @@ namespace FBC.SimpleUserAgentParser
         private List<FAgentPlatform>? platforms;
         private string commentData = string.Empty;
         private string errorMessage = string.Empty;
-        private FBCUACompiledData? compiledData { get; set; }
+        private FUACompiledData? compiledData { get; set; }
 
         public string? RawData
         {

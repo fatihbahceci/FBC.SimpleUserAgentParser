@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace FBC.SimpleUserAgentParser
 {
-    public partial class FBCUACompiledData
+    public partial class FUACompiledData
     {
         public EPlatform Platform { get; set; }
 
@@ -16,7 +16,7 @@ namespace FBC.SimpleUserAgentParser
         public string[] PlatformDetails { get => platformDetails ?? (platformDetails = new string[0]); set => platformDetails = value ?? new string[0]; }
 
 
-        public FBCUACompiledData(FUserAgentData userAgentData)
+        public FUACompiledData(FUserAgentData userAgentData)
         {
             CompileData(userAgentData);
         }
