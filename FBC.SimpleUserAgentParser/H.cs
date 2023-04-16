@@ -3,11 +3,56 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace FBC.SimpleUserAgentParser
 {
+    internal struct UserAgentStringMatch
+    {
+        public bool IsSuccess;
+        public string Part1;
+        public string Part2;
+        public string Part3;
+        public string MatchedFullValue;
+    }
     internal static class H
     {
+        public static UserAgentStringMatch TryParseAgentString(this string? agentString)
+        {
+            //string defiiniton: not contains parantheses and white space
+            if (!string.IsNullOrEmpty(agentString))
+            {
+                //(string)/(numbersanddotsonly)(any)
+                if (Regex.Match(agentString, @"^([^\(\)\s\/]+)\/([\d.]+)(.*)") is Match m && m.Success)
+                {
+                    return new UserAgentStringMatch()
+                    {
+                        IsSuccess = true,
+                        Part1 = m.Groups[1].Value.Trim(),
+                        Part2 = m.Groups[2].Value.Trim(),
+                        Part3 = m.Groups[3].Value.Trim(),
+                        MatchedFullValue = m.Value
+                    };
+                }
+                //(string)/(string)(any)
+                else if (Regex.Match(agentString, @"^([^\(\)\s]+)\/([^\(\)\s]+)\s?(.*)$") is Match m2 && m2.Success)
+                {
+                    return new UserAgentStringMatch()
+                    {
+                        IsSuccess = true,
+                        Part1 = m2.Groups[1].Value.Trim(),
+                        Part2 = m2.Groups[2].Value.Trim(),
+                        Part3 = m2.Groups[3].Value.Trim(),
+                        MatchedFullValue = m2.Value
+                    };
+                }
+            }
+            return new UserAgentStringMatch()
+            {
+                IsSuccess = false,
+            };
+        }
+
         /// <summary>
         /// ed
         /// </summary>
@@ -46,9 +91,9 @@ namespace FBC.SimpleUserAgentParser
         /// <param name="collection"></param>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static string? AnyStartsWith(this IEnumerable<string> collection, string str )
+        public static string? AnyStartsWith(this IEnumerable<string> collection, string str)
         {
-            return collection.FirstOrDefault( x => x.StartsWith(str));
+            return collection.FirstOrDefault(x => x.StartsWith(str));
         }
         /// <summary>
         /// Case Sensitive

@@ -93,7 +93,11 @@ namespace FBC.SimpleUserAgentParser
             }
             if (!string.IsNullOrEmpty(this.CommentData) && this.CommentData.Contains('/'))
             {
-                yield return $"{nameof(CommentData)} contains unhandled string";
+                var urlsCleaned = Regex.Replace(this.CommentData, C.CONTAINS_HTTP_OR_HTTPS_URL_PATTERN, string.Empty);
+                if (urlsCleaned.Contains("/"))
+                {
+                    yield return $"{nameof(CommentData)} contains unhandled string";
+                }
             }
         }
     }

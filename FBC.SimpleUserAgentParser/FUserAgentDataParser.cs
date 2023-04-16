@@ -45,13 +45,13 @@ namespace FBC.SimpleUserAgentParser
                  */
 
                 bool mainAssigned = false;
-                while (Regex.Match(userAgent, @"^([^\(\)\s]+)\/([^\(\)\s]+)\s?(.*)$") is Match m && m.Success)
+                while (userAgent.TryParseAgentString() is UserAgentStringMatch m && m.IsSuccess)
                 {
-                    var product = m.Groups[1].Value.Trim();
-                    var version = m.Groups[2].Value.Trim();
+                    var product = m.Part1;
+                    var version = m.Part2;
                     var details = "";
                     //var all = $"{product}/{version}";
-                    userAgent = m.Groups[3].Value.Trim();
+                    userAgent = m.Part3;
                     if (userAgent.StartsWith("("))
                     {
                         var eIndex = userAgent.IndexOf(")");
@@ -109,10 +109,10 @@ namespace FBC.SimpleUserAgentParser
                         sub.ProductVersion = version;
                         sub.Details = (details ?? "").Split(new char[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
                        //is valid http(s)://.... url
-                        if (Regex.IsMatch(m.Value, @"^(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$", RegexOptions.IgnoreCase))
+                        if (Regex.IsMatch(m.MatchedFullValue, C.HTTP_OR_HTTPS_URL_PATTERN, RegexOptions.IgnoreCase))
                         {
                             sub.Product = EProductChildItem.URL;
-                            sub.ProductAsStr = m.Value;
+                            sub.ProductAsStr = m.MatchedFullValue;
                             sub.ProductVersion = "";
                         } else
                         {
